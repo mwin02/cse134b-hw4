@@ -4,13 +4,6 @@
     <meta charset="UTF-8" />
     <title>Native Dialogs</title>
     <link href="images/favicon.ico" rel="icon" />
-    <style>
-      body {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-      }
-    </style>
   </head>
 
   <script
@@ -38,37 +31,40 @@
     }
 
     function onConfirmClicked() {
-      let output = document.getElementById("confirm-output");
+      let output = document.getElementById("output");
       let confirmResult = confirm("Are you sure you want to perform this?");
       output.innerText = `The value returned by the confirm method is : ${confirmResult}`;
     }
     function onPromptClicked() {
-      let output = document.getElementById("prompt-output");
+      let output = document.getElementById("output");
       let promptResult = prompt("Input: ");
       if (!promptResult || promptResult === "") {
         output.innerHTML = "User didn’t enter anything";
       } else {
-        output.innerHTML = `Input: ${promptResult}`;
+        output.innerHTML = `Prompt Result: ${promptResult}`;
       }
     }
     function onSafePromptClicked() {
-      let output = document.getElementById("safe-prompt-output");
+      let output = document.getElementById("output");
       let promptResult = prompt("Input: ");
-      let cleanPrompt = DOMPurify.sanitize(promptResult);
-      if (!promptResult || promptResult === "") {
+      let cleanPrompt = DOMPurify.sanitize(promptResult, {
+        USE_PROFILES: { html: false },
+        KEEP_CONTENT: false,
+      });
+      if (!cleanPrompt || cleanPrompt === "") {
         output.innerHTML = "User didn’t enter anything";
       } else {
-        output.innerHTML = `Input: ${cleanPrompt}`;
+        output.innerHTML = `Prompt Result: ${cleanPrompt}`;
       }
     }
   </script>
   <body>
+    <h1>Simple Dialogs</h1>
     <button id="alert" type="button">Alert</button>
     <button id="confirm" type="button">Confirm</button>
-    <output id="confirm-output"></output>
     <button id="prompt" type="button">Prompt</button>
-    <output id="prompt-output"></output>
     <button id="safe-prompt" type="button">Safer Prompt</button>
-    <output id="safe-prompt-output"></output>
+    <hr />
+    <output id="output"></output>
   </body>
 </html>
