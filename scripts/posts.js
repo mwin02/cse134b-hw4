@@ -1,3 +1,6 @@
+// This file is responsible for interfacing with the local storage and contains methods to get data from the storage, add/remove data from the storage and update data in the storage
+
+// Default storage for when local storage is empty
 let defaultStorage = [
   {
     postId: 1,
@@ -22,10 +25,13 @@ let defaultStorage = [
   },
 ];
 
+//the current storage
 var storage;
+//the id to assign new items
 var currentId;
 
 function initStorage() {
+  //initialize storage with the saved local storage if it exists, otherwise initialize to default
   storage = JSON.parse(localStorage.getItem("post-list"));
   if (!storage || storage.length == 0) {
     storage = defaultStorage;
@@ -33,17 +39,19 @@ function initStorage() {
   currentId = JSON.parse(localStorage.getItem("current-id")) || 4;
 }
 
+//return all the posts in the current storage
 function getPosts() {
   return storage;
 }
 
+//return a post with the specified postId if it exists
 function getPost(postId) {
   let id = Number(postId);
   return storage.find((post) => Number(post.postId) === id);
 }
 
+//delete the post with the postId from the current storage, then update the local storage
 function deletePost(postId) {
-  //delete litem from array
   postId = Number(postId);
   storage = storage.filter((elem) => {
     return elem.postId !== postId;
@@ -52,6 +60,7 @@ function deletePost(postId) {
   localStorage.setItem("post-list", JSON.stringify(storage));
 }
 
+//create a post with the given arguments, add it to the current storage, then update the local storage
 function createPost(post) {
   currentId++;
   let newId = currentId;
@@ -62,6 +71,8 @@ function createPost(post) {
   localStorage.setItem("current-id", JSON.stringify(currentId));
   return post;
 }
+
+//update the given post, replace it in the current storage, then update the local storage
 function editPost(post) {
   post.postId = Number(post.postId);
   let index = storage.findIndex((elem) => {

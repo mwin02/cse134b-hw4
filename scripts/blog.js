@@ -10,7 +10,9 @@ import {
 var currentMode;
 
 function initialize(mode) {
+  //initialize the storage by retrieving local storage information
   initStorage();
+
   let list = document.getElementById("post-list");
   let postList = getPosts();
   if (postList.length == 0) {
@@ -20,13 +22,16 @@ function initialize(mode) {
   }
   currentMode = mode;
 
+  //populate the unordered list element with the contents of the post database
   postList.forEach(({ postId, postTitle, postDate, postSummary }) => {
     let litem = createListItem(postId, postTitle, postDate, postSummary);
     list.appendChild(litem);
   });
+
   let addBtn = document.getElementById("add-post");
   addBtn.addEventListener("click", onAddClicked);
 
+  //promptDialog responsible for creating/editing posts returning with value "confirm" means that a save button was clicked
   let promptDialog = document.getElementById("prompt");
   promptDialog.addEventListener("close", () => {
     if (promptDialog.returnValue == "confirm") {
@@ -35,6 +40,7 @@ function initialize(mode) {
     resetFields();
   });
 
+  //confirmDialog responsible for deleting posts returning with value "confirm" means that a delete button was clicked
   let confirmDialog = document.getElementById("confirm");
   confirmDialog.addEventListener("close", () => {
     if (confirmDialog.returnValue == "confirm") {
@@ -43,6 +49,7 @@ function initialize(mode) {
   });
 }
 
+//display or hide the empty message
 function showEmptyMessage(showMessage) {
   let message = document.getElementById("empty-message");
   if (showMessage) {
@@ -52,6 +59,7 @@ function showEmptyMessage(showMessage) {
   }
 }
 
+//creates a list item that displays the post information and has an edit and delete button
 function createListItem(postId, postTitle, postDate, postSummary) {
   let litem = document.createElement("li");
   litem.innerHTML = `<p>Title: ${postTitle}, Date: ${postDate} </br> Summary: ${postSummary} </br></p>`;
@@ -65,12 +73,14 @@ function createListItem(postId, postTitle, postDate, postSummary) {
   return litem;
 }
 
+//when add is clicked, display the create new post prompt
 function onAddClicked() {
   let hidden = document.getElementById("post-id");
   hidden.value = "no-val";
   createPrompt();
 }
 
+//when edit is clicked, populate the values of the new post prompt and display it
 function onEditClicked(postId) {
   let hidden = document.getElementById("post-id");
   hidden.value = `${postId}`;
@@ -78,12 +88,14 @@ function onEditClicked(postId) {
   createPrompt(postToEdit);
 }
 
+//when delete is clicked, display the confirm prompt
 function onDeleteClicked(postId) {
   let deleteConfirm = document.getElementById("confirm");
   deleteConfirm.showModal();
   document.getElementById("delete-id").value = postId;
 }
 
+//when delete is confirmed on the dialog, remove the list item from the list and update the storage
 function onDeleteSubmit() {
   let postId = document.getElementById("delete-id").value;
   let list = document.getElementById("post-list");
@@ -95,6 +107,7 @@ function onDeleteSubmit() {
   }
 }
 
+//when a save is confirmed, get the new post and create it if it is a new post or update if it it was an edit
 function onDialogSubmit() {
   let postTitle = document.getElementById("title").value;
   let postDate = document.getElementById("date").value;
@@ -108,6 +121,7 @@ function onDialogSubmit() {
   }
 }
 
+//add a new post to the list and update the local storage
 function onAddSubmit(postInfo) {
   let postItem = createPost(postInfo);
   let newLitem = createListItem(
@@ -121,6 +135,7 @@ function onAddSubmit(postInfo) {
   showEmptyMessage(false);
 }
 
+//edit the post in the list and update the local storage
 function onEditSubmit(postInfo) {
   editPost(postInfo);
   let oldItem = document.getElementById(`post-${postInfo.postId}`);
@@ -133,6 +148,7 @@ function onEditSubmit(postInfo) {
   oldItem.replaceWith(newItem);
 }
 
+//displays the prompt with any specified values
 function createPrompt(post) {
   let dialog = document.getElementById("prompt");
   dialog.showModal();
@@ -143,12 +159,13 @@ function createPrompt(post) {
   }
 }
 
+//creates a button with specifed text in "simple" mode or icons in "styled" mode
 function createButton(buttonText) {
   let button = document.createElement("button");
   button.type = "button";
   if (currentMode == "simple") {
     button.innerText = buttonText;
-  } else {
+  } else if (currentMode == "styled") {
     console.log("test");
     let icon = document.createElement("img");
     icon.src = `./images/icons/${buttonText}-icon.png`;
