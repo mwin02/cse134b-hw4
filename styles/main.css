@@ -15,7 +15,8 @@ p,
 details,
 table,
 li,
-label {
+label,
+output {
   font-family: "Tenor Sans", sans-serif;
   color: var(--text-color);
 }
@@ -150,6 +151,20 @@ section {
   margin-bottom: 20px;
 }
 
+.horizontal-section {
+  display: inline-flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  gap: 20px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+output {
+  max-width: 80%;
+  font-size: 1.5rem;
+}
+
 @media only screen and (max-width: 450px) {
   section {
     width: 100%;
@@ -158,7 +173,7 @@ section {
 
 .inline-title {
   font-size: 1.5rem;
-  margin: 50px;
+  width: 80%;
   border-left: var(--header-border);
   border-right: var(--header-border);
 }

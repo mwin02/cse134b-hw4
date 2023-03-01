@@ -30,6 +30,23 @@
 
     gtag("config", "G-G100GX8YWP");
   </script>
+  <script type="module">
+    import { getQuote } from "./scripts/quote.js";
+    window.addEventListener("DOMContentLoaded", init);
+
+    function init() {
+      let generateBtn = document.getElementById("quote-generate");
+      generateBtn.addEventListener("click", () => generateQuote());
+    }
+
+    async function generateQuote() {
+      let quoteOutput = document.querySelector("#quote");
+      let authorOutput = document.querySelector("#author");
+      let quote = await getQuote();
+      quoteOutput.innerText = `${quote.quote}`;
+      authorOutput.innerText = `- ${quote.author}`;
+    }
+  </script>
   <body>
     <header>
       <nav aria-label="main">
@@ -116,15 +133,11 @@
           </p>
         </div>
       </section>
-      <section class="vertical-section">
-        <h3 class="inline-title">Fun Facts About Me:</h3>
-        <button type="button">Generate Fact</button>
-        <template>
-          <p>
-            This is a fun fact about me that will be generated from a list of
-            possible facts.
-          </p>
-        </template>
+      <section class="horizontal-section">
+        <h3 class="inline-title">Quote of The Day:</h3>
+        <button type="button" id="quote-generate">Generate Quote</button>
+        <output id="quote"></output>
+        <output id="author"></output>
       </section>
     </main>
     <footer>
