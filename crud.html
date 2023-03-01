@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>CRUD</title>
+    <link href="images/favicon.ico" rel="icon" />
+  </head>
+  <script type="module">
+    import { initialize } from "./scripts/blog.js";
+    window.addEventListener("DOMContentLoaded", () => initialize("simple"));
+  </script>
+  <body>
+    <dialog id="prompt">
+      <form method="dialog">
+        <fieldset>
+          <legend>Create A Post</legend>
+          <label for="title">Post Title: </label>
+          <input type="text" id="title" name="title" />
+          <br />
+          <label for="date">Date: </label>
+          <input type="date" id="date" name="date" />
+          <br />
+          <label for="summary">Summary: </label>
+          <input type="text" id="summary" name="summary" />
+        </fieldset>
+        <input hidden id="post-id" />
+        <div>
+          <button value="cancel">Cancel</button>
+          <button value="confirm">Save</button>
+        </div>
+      </form>
+    </dialog>
+    <dialog id="confirm">
+      <p>Are you sure you want to delete?</p>
+      <form method="dialog">
+        <input hidden id="delete-id" />
+        <div>
+          <button value="cancel">Cancel</button>
+          <button value="confirm">Delete</button>
+        </div>
+      </form>
+    </dialog>
+    <section>
+      <h1>Posts</h1>
+      <ul id="post-list"></ul>
+      <p id="empty-message">There are currently no posts.</p>
+      <button id="add-post" type="button">Add Post</button>
+    </section>
+  </body>
+</html>
