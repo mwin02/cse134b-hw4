@@ -349,7 +349,10 @@ audio {
 }
 
 iframe {
-  height: 50vh;
+  height: 60vh;
+}
+iframe {
+  width: 95vw;
 }
 
 details {

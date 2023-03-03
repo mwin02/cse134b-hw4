@@ -1,5 +1,9 @@
 Changes to Portfolio Site:
 
+- Replaced placeholder content on Projects with actual project content
+
+- Replaced placeholder project videos with actual application demos
+
 - Implemented a Quote of The Day section on index.html as a fun way to incoporate calling an API endpoint.
 
 3rd Party Scripts:
