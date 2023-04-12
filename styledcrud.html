@@ -13,11 +13,11 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Lato"
     />
+    <script type="module">
+      import { initialize } from "./scripts/blog.js";
+      window.addEventListener("DOMContentLoaded", () => initialize("styled"));
+    </script>
   </head>
-  <script type="module">
-    import { initialize } from "./scripts/blog.js";
-    window.addEventListener("DOMContentLoaded", () => initialize("styled"));
-  </script>
   <body>
     <dialog id="prompt">
       <form method="dialog">

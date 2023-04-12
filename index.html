@@ -15,24 +15,25 @@
     />
 
     <link href="styles/main.css" rel="stylesheet" />
+    <script type="module">
+      import { getQuote } from "./scripts/quote.js";
+      window.addEventListener("DOMContentLoaded", init);
+
+      function init() {
+        let generateBtn = document.getElementById("quote-generate");
+        generateBtn.addEventListener("click", () => generateQuote());
+      }
+
+      async function generateQuote() {
+        let quoteOutput = document.querySelector("#quote");
+        let authorOutput = document.querySelector("#author");
+        let quote = await getQuote();
+        quoteOutput.innerText = `${quote.quote}`;
+        authorOutput.innerText = `- ${quote.author}`;
+      }
+    </script>
   </head>
-  <script type="module">
-    import { getQuote } from "./scripts/quote.js";
-    window.addEventListener("DOMContentLoaded", init);
 
-    function init() {
-      let generateBtn = document.getElementById("quote-generate");
-      generateBtn.addEventListener("click", () => generateQuote());
-    }
-
-    async function generateQuote() {
-      let quoteOutput = document.querySelector("#quote");
-      let authorOutput = document.querySelector("#author");
-      let quote = await getQuote();
-      quoteOutput.innerText = `${quote.quote}`;
-      authorOutput.innerText = `- ${quote.author}`;
-    }
-  </script>
   <body>
     <header>
       <nav aria-label="main">
@@ -56,7 +57,6 @@
               srcset="./images/potrait_large.jpeg"
               width="450"
               height="450"
-              alt="Image of Myo Zaw Win"
               media="(min-width: 600px)"
             />
             <img
